@@ -21,13 +21,8 @@ services:
     restart: always
     depends_on:
       - postgres-db
-    environment:
-      DB_HOST: postgres-db
-      DB_PORT: 5432
-      DB_USER: postgres
-      DB_PASSWORD: password
-      DB_NAME: videoplayer
-      JWT_SECRET: b7ef4573ca24c626950c1023163cf3433e0fb260b7c70dc896327495d0dbdaba
+    env_file:
+      - ./video-player-backend/.env  
     ports:
       - "5000:5000"
 
