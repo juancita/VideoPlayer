@@ -6,9 +6,9 @@ services:
     container_name: postgres-db
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: videoplayer
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -21,8 +21,10 @@ services:
     restart: always
     depends_on:
       - postgres-db
+    env_file:
+      - ./video-player-backend/.env  # 🔴 Carga el archivo .env en el backend
     environment:
-      DATABASE_URL: "postgres://postgres:password@postgres-db:5432/videoplayer"
+      DOCKER_ENV: "true"  # 🔴 Variable para detectar si está en Docker
     ports:
       - "5000:5000"
 
