@@ -1,22 +1,20 @@
-# 1️⃣ Usar imagen de Node.js
-FROM node:18
+# Usar una imagen oficial de Node.js
+FROM node:18-alpine AS builder
 
-# 2️⃣ Establecer directorio de trabajo
+# Establecer directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# 3️⃣ Copiar package.json e instalar dependencias
-COPY package*.json ./
+# Copiar los archivos necesarios e instalar dependencias
+COPY package.json package-lock.json ./
 RUN npm install
 
-# 4️⃣ Copiar todo el código fuente
+# Copiar el código fuente y construir el proyecto
 COPY . .
-
-# 5️⃣ Construir el frontend
 RUN npm run build
 
-# 6️⃣ Servir la aplicación con un servidor estático
-RUN npm install -g serve
-CMD ["serve", "-s", "dist", "-l", "3000"]
+# Servir la aplicación con Nginx
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-# 7️⃣ Exponer el puerto del frontend
-EXPOSE 3000
+# Exponer el puerto 80 para servir la app
+EXPOSE 80

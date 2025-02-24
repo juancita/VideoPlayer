@@ -1,20 +1,18 @@
-# 1️⃣ Usar imagen oficial de Node.js
-FROM node:18
+# Usar una imagen oficial de Node.js
+FROM node:18-alpine
 
-# 2️⃣ Establecer directorio de trabajo dentro del contenedor
+# Establecer directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# 3️⃣ Copiar package.json y package-lock.json
-COPY package*.json ./
-
-# 4️⃣ Instalar dependencias
+# Copiar los archivos de la aplicación al contenedor
+COPY package.json package-lock.json ./
 RUN npm install
 
-# 5️⃣ Copiar todo el código fuente dentro del contenedor
+# Copiar el resto del código
 COPY . .
 
-# 6️⃣ Exponer el puerto del backend
+# Exponer el puerto de la API
 EXPOSE 5000
 
-# 7️⃣ Comando para iniciar el backend
+# Iniciar la aplicación
 CMD ["npm", "run", "dev"]
