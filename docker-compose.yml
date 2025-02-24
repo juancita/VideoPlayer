@@ -11,7 +11,7 @@ services:
       POSTGRES_DB: videoplayer
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql  
     ports:
       - "5432:5432"
 
@@ -22,7 +22,12 @@ services:
     depends_on:
       - postgres-db
     environment:
-      DATABASE_URL: "postgres://postgres:password@postgres-db:5432/videoplayer"
+      DB_HOST: postgres-db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_NAME: videoplayer
+      JWT_SECRET: b7ef4573ca24c626950c1023163cf3433e0fb260b7c70dc896327495d0dbdaba
     ports:
       - "5000:5000"
 
