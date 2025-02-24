@@ -14,17 +14,23 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
-
+  
   backend:
     build: ./video-player-backend
     container_name: video-player-backend
     restart: always
     depends_on:
-      - postgres-db
+      postgres-db:
+        condition: service_healthy # 💡 Esperar a que PostgreSQL esté listo
     environment:
       DATABASE_URL: "postgres://postgres:password@postgres-db:5432/videoplayer"
     ports:
       - "5000:5000"
+    healthcheck: # 💡 Definir una verificación de salud para asegurarse de que PostgreSQL esté listo
+      test: ["CMD", "pg_isready", "-h", "postgres-db", "-p", "5432", "-U", "postgres"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
 
   frontend:
     build: ./video-player-frontend
