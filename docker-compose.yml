@@ -14,23 +14,30 @@ services:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - "5432:5432"
-  
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
   backend:
     build: ./video-player-backend
     container_name: video-player-backend
     restart: always
     depends_on:
-      postgres-db:
-        condition: service_healthy 
+      - postgres-db
     environment:
-      DATABASE_URL: "postgres://postgres:password@postgres-db:5432/videoplayer"
+      DB_NAME: videoplayer
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_HOST: postgres-db
+      JWT_SECRET: b7ef4573ca24c626950c1023163cf3433e0fb260b7c70dc896327495d0dbdaba
+      PORT: 5000
     ports:
       - "5000:5000"
-    healthcheck: 
-      test: ["CMD", "pg_isready", "-h", "postgres-db", "-p", "5432", "-U", "postgres"]
-      interval: 10s
-      retries: 5
-      start_period: 5s
+    volumes:
+      - ./video-player-backend:/app
+      - /app/node_modules
 
   frontend:
     build: ./video-player-frontend
@@ -40,6 +47,11 @@ services:
       - backend
     ports:
       - "3000:3000"
+    environment:
+      VITE_BACKEND_URL: "http://video-player-backend:5000"
+    volumes:
+      - ./video-player-frontend:/app
+      - /app/node_modules
 
 volumes:
   postgres_data:
