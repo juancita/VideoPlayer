@@ -1,4 +1,10 @@
-
+-- Crear tabla de usuarios (si no existe)
+CREATE TABLE IF NOT EXISTS "Users" (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(20) NOT NULL
+);
 
 -- Crear tabla de videos (si no existe)
 CREATE TABLE IF NOT EXISTS "Videos" (
@@ -23,6 +29,10 @@ CREATE TABLE IF NOT EXISTS "Schedule" (
     endTime TIMESTAMP NOT NULL
 );
 
+-- Insertar usuario admin con contraseña "admin" (en texto plano, idealmente debería encriptarse antes)
+INSERT INTO "Users" (id, username, password, role) 
+VALUES ('00000000-0000-0000-0000-000000000001', 'admin', 'admin', 'admin')
+ON CONFLICT (username) DO NOTHING;
 
 -- Insertar banners
 INSERT INTO "Banners" (id, title, imageUrl) VALUES 
