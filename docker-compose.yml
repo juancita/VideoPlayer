@@ -1,35 +1,36 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  postgres-db:
-    image: postgres:15
-    container_name: postgres-db
+  postgres:
+    image: postgres:latest
+    container_name: postgres_container
     restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+      POSTGRES_PASSWORD: mysecretpassword  # ⚠️ Verifica esta contraseña
       POSTGRES_DB: videoplayer
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql  
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   backend:
     build: ./video-player-backend
-    container_name: video-player-backend
-    restart: always
+    container_name: backend_container
     depends_on:
-      - postgres-db
-    env_file:
-      - ./video-player-backend/.env  
+      - postgres
+    environment:
+      DB_HOST: postgres
+      DB_USER: postgres
+      DB_PASSWORD: mysecretpassword  # ⚠️ Debe coincidir con la de Postgres
+      DB_NAME: videoplayer
+      DB_PORT: 5432
     ports:
       - "5000:5000"
 
   frontend:
     build: ./video-player-frontend
-    container_name: video-player-frontend
-    restart: always
+    container_name: frontend_container
     depends_on:
       - backend
     ports:
