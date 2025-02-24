@@ -1,6 +1,6 @@
 const Video = require("../models/video"); // Importamos el modelo de Video
 
-// 🔹 Subir un nuevo video
+//  Subir un nuevo video
 exports.uploadVideo = async (req, res) => {
   try {
     const { title, url, type } = req.body;
@@ -19,7 +19,7 @@ exports.uploadVideo = async (req, res) => {
   }
 };
 
-// 🔹 Obtener todos los videos
+//  Obtener todos los videos
 exports.getVideos = async (req, res) => {
   try {
     const videos = await Video.findAll();
@@ -30,7 +30,7 @@ exports.getVideos = async (req, res) => {
   }
 };
 
-// 🔹 Actualizar un video por ID
+//  Actualizar un video por ID
 exports.updateVideo = async (req, res) => {
   try {
     const { id } = req.params;
@@ -51,7 +51,7 @@ exports.updateVideo = async (req, res) => {
   }
 };
 
-// 🔹 Eliminar un video por ID
+//  Eliminar un video por ID
 exports.deleteVideo = async (req, res) => {
   try {
     const { id } = req.params;

@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const { sequelize } = require("./config/database");
 
-// Asegúrate de que estás importando las rutas correctamente
+
 const authRoutes = require("./routes/auth.routes");
 const videoRoutes = require("./routes/video.routes");
 const bannerRoutes = require("./routes/banner.routes");
@@ -26,11 +26,11 @@ app.use("/api/schedule", scheduleRoutes);
 
 // Conectar a la base de datos
 sequelize.sync()
-  .then(() => console.log("💾 Base de datos sincronizada"))
-  .catch(err => console.error("❌ Error al conectar la BD:", err));
+  .then(() => console.log(" Base de datos sincronizada"))
+  .catch(err => console.error(" Error al conectar la BD:", err));
 
 // Puerto
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+  console.log(` Servidor corriendo en http://localhost:${PORT}`);
 });

@@ -3,7 +3,7 @@ const Videos = require("./video");
 const Banners = require("./banner");
 const Schedule = require("./schedule");
 
-// Verifica que Schedule solo tenga una relación con cada modelo
+
 if (!Schedule.associations.video) {
   Schedule.belongsTo(Videos, { foreignKey: "videoId", as: "video" });
 }

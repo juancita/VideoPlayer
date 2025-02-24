@@ -7,6 +7,6 @@ const router = express.Router();
 router.post("/create", verifyToken, createSchedule);
 router.get("/", getSchedules);
 router.get("/now", getCurrentSchedule);
-router.get("/upcoming", getUpcomingSchedules); // ✅ Ahora sí está definido correctamente
+router.get("/upcoming", getUpcomingSchedules); // 
 
 module.exports = router;

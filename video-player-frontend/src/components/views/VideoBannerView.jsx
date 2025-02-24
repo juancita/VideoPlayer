@@ -5,7 +5,7 @@ const VideoBannerView = ({ video, banner, nextSchedules = [] }) => {
   return (
     <Container maxWidth="lg" sx={{ mt: 5 }}>
       <Grid container spacing={2}>
-        {/* 📌 Video (65%) */}
+        {/*  Video (65%) */}
         <Grid item xs={8}>
           <Paper elevation={3} sx={{ p: 2 }}>
             <Typography variant="h5">{video.title}</Typography>
@@ -19,7 +19,7 @@ const VideoBannerView = ({ video, banner, nextSchedules = [] }) => {
           </Paper>
         </Grid>
 
-        {/* 📌 Banner + Lista de Programación (35%) */}
+        {/*  Banner + Lista de Programación (35%) */}
         <Grid item xs={4}>
           <Paper elevation={3} sx={{ p: 2, textAlign: "center" }}>
             <img

@@ -14,7 +14,7 @@ const BannerView = ({ banner }) => {
           src={imageUrl}
           alt={banner.title}
           style={{ width: "100%", maxHeight: "500px", objectFit: "cover" }}
-          onError={(e) => { e.target.src = defaultImage; }} // Si hay error, muestra la imagen por defecto
+          onError={(e) => { e.target.src = defaultImage; }} 
         />
         <Typography variant="h5">{banner.title}</Typography>
         <Typography variant="body2">{banner.text}</Typography>

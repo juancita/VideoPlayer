@@ -8,13 +8,13 @@ const sequelize = new Sequelize(
   {
     host: process.env.DB_HOST,
     dialect: "postgres",
-    logging: false, // Desactiva logs SQL
+    logging: false, // 
   }
 );
 
 // Verificar conexión
 sequelize.authenticate()
-  .then(() => console.log("✅ Conexión a PostgreSQL establecida"))
-  .catch(err => console.error("❌ Error al conectar con PostgreSQL:", err));
+  .then(() => console.log("Conexión a PostgreSQL establecida"))
+  .catch(err => console.error(" Error al conectar con PostgreSQL:", err));
 
 module.exports = { sequelize };

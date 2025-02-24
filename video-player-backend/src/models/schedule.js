@@ -7,7 +7,7 @@ const Schedule = sequelize.define("Schedule", {
   id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
   startTime: { type: DataTypes.DATE, allowNull: false },
   endTime: { type: DataTypes.DATE, allowNull: false },
-  videoId: { type: DataTypes.UUID, allowNull: true },  // Ahora definimos las claves foráneas
+  videoId: { type: DataTypes.UUID, allowNull: true },  
   bannerId: { type: DataTypes.UUID, allowNull: true }
 });
 

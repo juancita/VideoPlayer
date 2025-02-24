@@ -1,7 +1,7 @@
-const { Schedule, Videos, Banners } = require("../models"); // ✅ Importación correcta
+const { Schedule, Videos, Banners } = require("../models"); 
 const { Op } = require("sequelize");
 
-// 📌 Crear una nueva programación
+//  Crear una nueva programación
 exports.createSchedule = async (req, res) => {
   try {
     const { videoId, bannerId, startTime, endTime } = req.body;
@@ -17,7 +17,7 @@ exports.createSchedule = async (req, res) => {
   }
 };
 
-// 📌 Obtener todas las programaciones
+//  Obtener todas las programaciones
 exports.getSchedules = async (req, res) => {
   try {
     const schedules = await Schedule.findAll({
@@ -32,7 +32,7 @@ exports.getSchedules = async (req, res) => {
   }
 };
 
-// 📌 Obtener la programación actual (Detecta video y banner simultáneos)
+//  Obtener la programación actual (Detecta video y banner simultáneos)
 exports.getCurrentSchedule = async (req, res) => {
   try {
     const now = new Date();
@@ -75,7 +75,7 @@ exports.getCurrentSchedule = async (req, res) => {
   }
 };
 
-// 📌 Obtener las próximas programaciones
+//  Obtener las próximas programaciones
 exports.getUpcomingSchedules = async (req, res) => {
   try {
     const now = new Date();

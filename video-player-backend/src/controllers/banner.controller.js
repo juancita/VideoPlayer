@@ -1,6 +1,6 @@
 const Banner = require("../models/banner");
 
-// 🔹 Subir un nuevo banner
+//  Subir un nuevo banner
 exports.uploadBanner = async (req, res) => {
   try {
     const { title, imageUrl, text, duration } = req.body;
@@ -17,7 +17,7 @@ exports.uploadBanner = async (req, res) => {
   }
 };
 
-// 🔹 Obtener todos los banners
+// Obtener todos los banners
 exports.getBanners = async (req, res) => {
   try {
     const banners = await Banner.findAll();
@@ -28,7 +28,7 @@ exports.getBanners = async (req, res) => {
   }
 };
 
-// 🔹 Actualizar un banner
+// Actualizar un banner
 exports.updateBanner = async (req, res) => {
   try {
     const { id } = req.params;
@@ -47,7 +47,7 @@ exports.updateBanner = async (req, res) => {
   }
 };
 
-// 🔹 Eliminar un banner
+//  Eliminar un banner
 exports.deleteBanner = async (req, res) => {
   try {
     const { id } = req.params;

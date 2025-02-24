@@ -8,7 +8,7 @@ import Navbar from "./components/Navbar";
 
 const App = () => {
   return (
-    <Router> {/* 🚨 SOLO debe haber UN <Router> en toda la aplicación */}
+    <Router> {/*  SOLO debe haber UN <Router> en toda la aplicación */}
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

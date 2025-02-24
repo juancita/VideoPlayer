@@ -21,12 +21,12 @@ services:
     restart: always
     depends_on:
       postgres-db:
-        condition: service_healthy # 💡 Esperar a que PostgreSQL esté listo
+        condition: service_healthy 
     environment:
       DATABASE_URL: "postgres://postgres:password@postgres-db:5432/videoplayer"
     ports:
       - "5000:5000"
-    healthcheck: # 💡 Definir una verificación de salud para asegurarse de que PostgreSQL esté listo
+    healthcheck: 
       test: ["CMD", "pg_isready", "-h", "postgres-db", "-p", "5432", "-U", "postgres"]
       interval: 10s
       retries: 5

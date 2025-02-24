@@ -28,7 +28,6 @@ const BannerUploadForm = () => {
       duration: Number(duration), // Asegurar que la duración sea un número
     };
   
-    console.log("📌 Datos enviados:", bannerData); // <-- 🔍 Ver qué se está enviando
   
     try {
       await axios.post(
@@ -43,7 +42,7 @@ const BannerUploadForm = () => {
       );
       alert("Banner subido correctamente.");
     } catch (error) {
-      console.error("❌ Error al subir banner:", error.response?.data || error);
+      console.error(" Error al subir banner:", error.response?.data || error);
       alert("Hubo un error al subir el banner.");
     }
   };

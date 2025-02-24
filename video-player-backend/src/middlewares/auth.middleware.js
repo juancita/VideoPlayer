@@ -10,10 +10,10 @@ exports.verifyToken = (req, res, next) => {
   try {
     const verified = jwt.verify(token.replace("Bearer ", ""), process.env.JWT_SECRET);
     req.user = verified;
-    console.log("Usuario autenticado:", verified); // <-- Agrega esto para depuración
+    console.log("Usuario autenticado:", verified); 
     next();
   } catch (err) {
-    console.error("Error verificando token:", err); // <-- Log para ver el error
+    console.error("Error verificando token:", err); 
     return res.status(400).json({ message: "Token inválido." });
   }
 };

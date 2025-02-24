@@ -1,9 +1,9 @@
-# 📌 Ignorar dependencias de Node.js (backend y frontend)
+#  Ignorar dependencias de Node.js (backend y frontend)
 node_modules/
 package-lock.json
 yarn.lock
 
-# 📌 Ignorar archivos de logs
+#  Ignorar archivos de logs
 logs/
 *.log
 npm-debug.log*
