@@ -8,15 +8,18 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  //  Configurar la URL del backend (Docker o Local)
+  const API_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/auth/register", { username, password });
-      alert("Registro exitoso. Ahora puedes iniciar sesión.");
+      await axios.post(`${API_URL}/api/auth/register`, { username, password });
+      alert("✅ Registro exitoso. Ahora puedes iniciar sesión.");
       navigate("/login");
     } catch (error) {
-      console.error("Error al registrar usuario", error);
-      alert("No se pudo registrar el usuario");
+      console.error("❌ Error al registrar usuario:", error);
+      alert("⚠️ No se pudo registrar el usuario. Intenta con otro nombre.");
     }
   };
 
@@ -24,12 +27,12 @@ const Register = () => {
     <Container maxWidth="sm">
       <Paper elevation={3} sx={{ p: 4, mt: 5 }}>
         <Typography variant="h4" align="center" gutterBottom>
-          Registrarse
+          📝 Registrarse
         </Typography>
         <form onSubmit={handleRegister}>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <TextField
-              label="Usuario"
+              label="👤 Usuario"
               variant="outlined"
               fullWidth
               value={username}
@@ -37,7 +40,7 @@ const Register = () => {
               required
             />
             <TextField
-              label="Contraseña"
+              label="🔑 Contraseña"
               variant="outlined"
               type="password"
               fullWidth
@@ -46,12 +49,12 @@ const Register = () => {
               required
             />
             <Button variant="contained" color="primary" type="submit">
-              Registrarse
+              ✅ Registrarse
             </Button>
           </Box>
         </form>
         <Typography align="center" sx={{ mt: 2 }}>
-          ¿Ya tienes cuenta? <a href="/login">Inicia sesión aquí</a>
+          ¿Ya tienes cuenta? <a href="/login">🔐 Inicia sesión aquí</a>
         </Typography>
       </Paper>
     </Container>

@@ -15,19 +15,23 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  //  Configurar la URL del backend (Docker o Local)
+  const API_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
+      const response = await axios.post(`${API_URL}/api/auth/login`, {
         username,
         password,
       });
+
       localStorage.setItem("token", response.data.token);
-      alert("Inicio de sesión exitoso.");
+      alert("✅ Inicio de sesión exitoso.");
       navigate("/dashboard"); // Redirigir al dashboard
     } catch (error) {
-      console.error("Error al iniciar sesión", error);
-      alert("Usuario o contraseña incorrectos.");
+      console.error("❌ Error al iniciar sesión:", error);
+      alert("⚠️ Usuario o contraseña incorrectos.");
     }
   };
 
@@ -35,12 +39,12 @@ const Login = () => {
     <Container maxWidth="sm">
       <Paper elevation={3} sx={{ p: 4, mt: 5 }}>
         <Typography variant="h4" align="center" gutterBottom>
-          Iniciar sesión
+          🔐 Iniciar sesión
         </Typography>
         <form onSubmit={handleLogin}>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <TextField
-              label="Usuario"
+              label="👤 Usuario"
               variant="outlined"
               fullWidth
               value={username}
@@ -48,7 +52,7 @@ const Login = () => {
               required
             />
             <TextField
-              label="Contraseña"
+              label="🔑 Contraseña"
               variant="outlined"
               type="password"
               fullWidth
@@ -57,7 +61,7 @@ const Login = () => {
               required
             />
             <Button variant="contained" color="primary" type="submit">
-              Iniciar sesión
+              ✅ Iniciar sesión
             </Button>
           </Box>
         </form>

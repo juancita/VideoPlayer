@@ -10,13 +10,16 @@ const Home = () => {
   const [nextSchedules, setNextSchedules] = useState([]); // Aseguramos un array vacío
   const [loading, setLoading] = useState(true);
 
+  // 📌 Configurar la URL del backend (Docker o Local)
+  const API_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
   useEffect(() => {
     const fetchSchedule = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/schedule/now");
+        const response = await axios.get(`${API_URL}/api/schedule/now`);
         setSchedule(response.data);
 
-        const upcomingResponse = await axios.get("http://localhost:5000/api/schedule/upcoming");
+        const upcomingResponse = await axios.get(`${API_URL}/api/schedule/upcoming`);
         setNextSchedules(upcomingResponse.data || []);
       } catch (error) {
         console.error("Error al obtener la programación:", error);

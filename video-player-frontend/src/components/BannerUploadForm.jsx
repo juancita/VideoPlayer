@@ -8,6 +8,9 @@ const BannerUploadForm = () => {
   const [bannerText, setBannerText] = useState("");
   const [duration, setDuration] = useState(10);
 
+  // 📌 Configurar la URL del backend (Docker o Local)
+  const API_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
   const handleUpload = async () => {
     const token = localStorage.getItem("token");
   
@@ -28,10 +31,9 @@ const BannerUploadForm = () => {
       duration: Number(duration), // Asegurar que la duración sea un número
     };
   
-  
     try {
       await axios.post(
-        "http://localhost:5000/api/banners/upload",
+        `${API_URL}/api/banners/upload`, // 🔹 Ahora funciona en cualquier entorno
         bannerData,
         {
           headers: {
@@ -46,16 +48,42 @@ const BannerUploadForm = () => {
       alert("Hubo un error al subir el banner.");
     }
   };
-  
 
   return (
     <Container>
       <h3>Subir Banner</h3>
-      <TextField label="Nombre del banner" fullWidth onChange={(e) => setBannerName(e.target.value)} />
-      <TextField label="URL de la imagen" fullWidth onChange={(e) => setBannerUrl(e.target.value)} style={{ marginTop: 10 }} />
-      <TextField label="Texto del banner (opcional)" fullWidth onChange={(e) => setBannerText(e.target.value)} style={{ marginTop: 10 }} />
-      <TextField label="Duración (segundos)" type="number" fullWidth onChange={(e) => setDuration(e.target.value)} style={{ marginTop: 10 }} />
-      <Button variant="contained" onClick={handleUpload} style={{ marginTop: 10 }}>
+      <TextField 
+        label="Nombre del banner" 
+        fullWidth 
+        value={bannerName} 
+        onChange={(e) => setBannerName(e.target.value)} 
+      />
+      <TextField 
+        label="URL de la imagen" 
+        fullWidth 
+        value={bannerUrl} 
+        onChange={(e) => setBannerUrl(e.target.value)} 
+        style={{ marginTop: 10 }} 
+      />
+      <TextField 
+        label="Texto del banner (opcional)" 
+        fullWidth 
+        value={bannerText} 
+        onChange={(e) => setBannerText(e.target.value)} 
+        style={{ marginTop: 10 }} 
+      />
+      <TextField 
+        label="Duración (segundos)" 
+        type="number" 
+        fullWidth 
+        value={duration} 
+        onChange={(e) => setDuration(e.target.value)} 
+        style={{ marginTop: 10 }} 
+      />
+      <Button 
+        variant="contained" 
+        onClick={handleUpload} 
+        style={{ marginTop: 10 }}>
         Subir Banner
       </Button>
     </Container>

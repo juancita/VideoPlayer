@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Container, Typography } from "@mui/material";
+import { Button, Container, Typography, Box } from "@mui/material";
 import VideoUploadForm from "../components/VideoUploadForm";
 import BannerUploadForm from "../components/BannerUploadForm";
 import ScheduleForm from "../components/ScheduleForm";
@@ -10,19 +10,21 @@ const Dashboard = () => {
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
-        Panel de Administración
+        📌 Panel de Administración
       </Typography>
 
       {/* Botones para alternar vistas */}
-      <Button variant="contained" onClick={() => setView("video")} style={{ marginRight: 10 }}>
-        Cargar Video
-      </Button>
-      <Button variant="contained" onClick={() => setView("banner")} style={{ marginRight: 10 }}>
-        Cargar Banner
-      </Button>
-      <Button variant="contained" onClick={() => setView("schedule")}>
-        Crear Programación
-      </Button>
+      <Box sx={{ display: "flex", gap: 2, mb: 3 }}>
+        <Button variant="contained" color="primary" onClick={() => setView("video")}>
+          🎬 Cargar Video
+        </Button>
+        <Button variant="contained" color="secondary" onClick={() => setView("banner")}>
+          🖼️ Cargar Banner
+        </Button>
+        <Button variant="contained" color="success" onClick={() => setView("schedule")}>
+          🕒 Crear Programación
+        </Button>
+      </Box>
 
       {/* Mostrar la vista según el botón seleccionado */}
       {view === "video" && <VideoUploadForm />}

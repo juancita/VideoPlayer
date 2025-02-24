@@ -10,16 +10,19 @@ const ScheduleForm = () => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
 
+  // 📌 Configurar la URL del backend (Docker o Local)
+  const API_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const videoRes = await axios.get("http://localhost:5000/api/videos");
-        const bannerRes = await axios.get("http://localhost:5000/api/banners");
+        const videoRes = await axios.get(`${API_URL}/api/videos`);
+        const bannerRes = await axios.get(`${API_URL}/api/banners`);
         
         setVideos(videoRes.data || []);
         setBanners(bannerRes.data || []);
       } catch (error) {
-        console.error("Error al obtener los datos:", error);
+        console.error("❌ Error al obtener los datos:", error);
       }
     };
     fetchData();
@@ -33,7 +36,11 @@ const ScheduleForm = () => {
       return;
     }
   
-    // Convertimos contentId al formato que espera el backend
+    if (!contentId || !startTime || !endTime) {
+      alert("Todos los campos son obligatorios.");
+      return;
+    }
+  
     const requestData = {
       startTime,
       endTime,
@@ -41,25 +48,23 @@ const ScheduleForm = () => {
       bannerId: contentType === "banner" ? contentId : null,
     };
   
-    console.log("Datos enviados:", requestData); // <-- Verifica que sean correctos
+   
   
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/schedule/create",
+        `${API_URL}/api/schedule/create`, // 🔹 Ahora funciona en cualquier entorno
         requestData,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
   
-      alert("Programación creada con éxito!");
+      alert("✅ Programación creada con éxito!");
     } catch (error) {
-      console.error("Error al programar contenido:", error.response?.data || error);
+      console.error("❌ Error al programar contenido:", error.response?.data || error);
       alert("Hubo un error al programar el contenido.");
     }
   };
-  
-  
 
   return (
     <Container>
@@ -72,23 +77,22 @@ const ScheduleForm = () => {
           setContentType(e.target.value);
           setContentId(""); // Reiniciar selección
         }}>
-          <MenuItem value="video">Video</MenuItem>
-          <MenuItem value="banner">Banner</MenuItem>
+          <MenuItem value="video">🎬 Video</MenuItem>
+          <MenuItem value="banner">🖼️ Banner</MenuItem>
         </Select>
       </FormControl>
 
       {/* Selección del contenido específico */}
       <FormControl fullWidth>
-  <InputLabel>Seleccionar Contenido</InputLabel>
-  <Select value={contentId || ""} onChange={(e) => setContentId(e.target.value)}>
-    {(contentType === "video" ? videos : banners).map((item, index) => (
-      <MenuItem key={item._id || item.id || index} value={item._id || item.id}>
-        {item.title}
-      </MenuItem>
-    ))}
-  </Select>
-</FormControl>
-
+        <InputLabel>Seleccionar Contenido</InputLabel>
+        <Select value={contentId || ""} onChange={(e) => setContentId(e.target.value)}>
+          {(contentType === "video" ? videos : banners).map((item, index) => (
+            <MenuItem key={item._id || item.id || index} value={item._id || item.id}>
+              {item.title}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
       {/* Campos de tiempo */}
       <TextField
@@ -109,7 +113,7 @@ const ScheduleForm = () => {
       />
 
       {/* Botón de programación */}
-      <Button variant="contained" color="primary" onClick={handleSchedule}>
+      <Button variant="contained" color="primary" onClick={handleSchedule} style={{ marginTop: 10 }}>
         PROGRAMAR
       </Button>
     </Container>
