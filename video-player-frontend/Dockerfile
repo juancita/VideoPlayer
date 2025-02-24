@@ -1,5 +1,5 @@
-# 1️⃣ Usar imagen de Node.js
-FROM node:18
+# 1️⃣ Usar una imagen oficial de Node.js
+FROM node:18 AS build
 
 # 2️⃣ Establecer directorio de trabajo
 WORKDIR /app
@@ -8,15 +8,22 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 
-# 4️⃣ Copiar todo el código fuente
+# 4️⃣ Copiar el código fuente y construir el proyecto
 COPY . .
-
-# 5️⃣ Construir el frontend
 RUN npm run build
 
-# 6️⃣ Servir la aplicación con un servidor estático
+# 5️⃣ Crear un nuevo contenedor para servir los archivos estáticos
+FROM node:18
+WORKDIR /app
+
+# 6️⃣ Instalar un servidor estático (serve)
 RUN npm install -g serve
+
+# 7️⃣ Copiar los archivos construidos desde la etapa anterior
+COPY --from=build /app/dist /app/dist
+
+# 8️⃣ Definir el comando para servir la aplicación
 CMD ["serve", "-s", "dist", "-l", "3000"]
 
-# 7️⃣ Exponer el puerto del frontend
+# 9️⃣ Exponer el puerto 3000
 EXPOSE 3000
